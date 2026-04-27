@@ -36,8 +36,7 @@
     #install-banner.show{display:flex;opacity:1;transform:translateX(-50%) translateY(0)}
     .ib-row{display:flex;align-items:center;gap:12px}
     .ib-icon{width:44px;height:44px;border-radius:13px;background:#FF4D4D;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
-    .ib-info{flex:1}
-    .ib-title{font-size:14px;font-weight:800;color:#fff}
+    .ib-info{flex:1}.ib-title{font-size:14px;font-weight:800;color:#fff}
     .ib-sub{font-size:12px;color:rgba(255,255,255,.5);margin-top:2px}
     .ib-close{font-size:18px;cursor:pointer;color:rgba(255,255,255,.4);padding:4px}
     .ib-btn{width:100%;padding:13px;background:#FF4D4D;color:#fff;border:none;border-radius:13px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit}
@@ -47,49 +46,34 @@
   </style>
 </head>
 <body>
-
 <div id="splash">
   <div class="logo">🛵</div>
   <div class="brand"><span class="y">Yummi</span><span class="g">Go</span><span class="s">App</span></div>
   <div class="tagline">Tu comida favorita, a un toque 🔥</div>
   <div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>
 </div>
-
 <div id="load-error">
   <div style="font-size:48px">😕</div>
   <div style="font-size:18px;font-weight:700">Error al cargar la app</div>
   <div style="font-size:13px;color:rgba(255,255,255,.5);max-width:260px">Intenta recargar la página</div>
   <button onclick="location.reload()" style="background:#FF4D4D;color:#fff;border:none;border-radius:12px;padding:12px 28px;font-size:14px;font-weight:700;cursor:pointer;margin-top:8px">Recargar</button>
 </div>
-
 <div id="install-banner">
   <div class="ib-row">
     <div class="ib-icon">🛵</div>
-    <div class="ib-info">
-      <div class="ib-title">Instalar YummiGoApp</div>
-      <div class="ib-sub">Sin App Store · Gratis · Sin anuncios</div>
-    </div>
+    <div class="ib-info"><div class="ib-title">Instalar YummiGoApp</div><div class="ib-sub">Sin App Store · Gratis · Sin anuncios</div></div>
     <div class="ib-close" onclick="dismissInstall()">✕</div>
   </div>
   <button class="ib-btn" onclick="installPWA()">📲 Instalar en este dispositivo</button>
 </div>
-
 <div id="root"></div>
-
 <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
 <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
-
 <script>
-if('serviceWorker' in navigator){
-  window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
-}
+if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));}
 let deferredPrompt=null;
-window.addEventListener('beforeinstallprompt',e=>{
-  e.preventDefault();deferredPrompt=e;
-  if(!window.matchMedia('(display-mode:standalone)').matches)
-    setTimeout(()=>document.getElementById('install-banner')?.classList.add('show'),5000);
-});
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferredPrompt=e;if(!window.matchMedia('(display-mode:standalone)').matches)setTimeout(()=>document.getElementById('install-banner')?.classList.add('show'),5000);});
 function installPWA(){if(!deferredPrompt)return;deferredPrompt.prompt();deferredPrompt.userChoice.then(()=>{deferredPrompt=null;dismissInstall();});}
 function dismissInstall(){const b=document.getElementById('install-banner');if(b){b.style.opacity='0';setTimeout(()=>b.classList.remove('show'),350);}}
 window.__hideSplash=()=>{const s=document.getElementById('splash');if(s&&!s.classList.contains('hide')){s.classList.add('hide');setTimeout(()=>s.remove(),700);}};
@@ -97,16 +81,14 @@ let lt=0;document.addEventListener('touchend',e=>{const n=Date.now();if(n-lt<300
 const et=setTimeout(()=>{if(!document.getElementById('root')?.children.length){document.getElementById('load-error')?.classList.add('show');window.__hideSplash&&window.__hideSplash();}},20000);
 window.__appLoaded=()=>clearTimeout(et);
 </script>
-
-<!-- App completa compilada por Babel -->
 <script type="text/babel" data-presets="react,env">
 const { useState, useEffect, useRef, useCallback } = React;
 
 // ─────────────────────────────────────────
 // SUPABASE
 // ─────────────────────────────────────────
-const SB_URL = "https://fmeaecwbxhyihsdzfran.supabase.co";
-const SB_KEY = "sb_publishable_JrCQZ5MdSUwhR0s1rXr8DA_gUgT6diR";
+const SB_URL = "https://zqywdasabjgtxiaetyhz.supabase.co";
+const SB_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InpxeXdkYXNhYmpndHhpYWV0eWh6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzcyNTMwNjIsImV4cCI6MjA5MjgyOTA2Mn0.0FK7DRY4s23LxysFQ89c3mH1XLzdFV5GwA1VUtzK5UI";
 const sbH = { "apikey": SB_KEY, "Authorization": `Bearer ${SB_KEY}`, "Content-Type": "application/json", "Prefer": "return=representation" };
 
 // Safe fetch — never throws, always returns array
@@ -4714,6 +4696,5 @@ function App() {
 })();
 
 </script>
-
 </body>
 </html>
